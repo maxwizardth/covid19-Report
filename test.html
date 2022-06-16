@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <meta charset="utf-8">
+
+<style type="text/css">
+	*{box-sizing: border-box;}
+     body{height: 100%;
+     	background: black}	
+	.header{background: #22002a;
+		color: white;
+		padding: 10px;}
+	.table-responsive{height:all;
+		background:#444444;
+	    padding:3px;
+	    margin-bottom: 20%}
+	
+	table{background: #152009;}
+	  footer{background: #222222;
+           margin-bottom:0px
+           padding: 5px;
+           height:15%;
+           }
+    
+    .fa{font-size: 44px;
+    	padding: 9px;
+        margin: 9px}
+   
+    .page{background: #333;
+    	width: auto;
+        margin:0px;
+        height:auto;
+        }
+     .page button{margin:5px;}
+      .cpy-right{color: white;
+      	margin-top: -14px}
+      
+	</style>
+</head>
+
+<body>
+	
+	<div class="header ">
+	<h1 >Maxwizard Covid Research </h1>
+	<h2 id="results">COVID19 Statistics Report.</h2>
+	</div>
+    <div class="table-responsive">
+
+	<table  class="table table-dark table-bordered">
+		<thead class="sticky">
+		<tr >
+		<th id="Index" rowspan="2" >Index</th>
+		<th id="continent" rowspan="2" >Continents</th>
+		<th id="country" rowspan="2" >Country</th>
+		<th id="population" rowspan="2" >Population</th>
+		<th id="new" >new case</th>
+		<th id="active" >active case</th>
+		<th id="critical" >critical case</th>
+		<th id="recovered" >recovered</th>
+		<th id="total" >total case</th>
+		<th id="day" rowspan="2" >Day</th>
+		<th id="New" >New death</th>
+		<th id="total2" >Death total</th>
+		<th id="tests" >tests total</th>
+
+		</tr>
+		</thead>
+		<tbody id="table">
+			
+		</tbody>
+	</table>
+	<div class="text-center page">
+    <button class="btn btn-secondary" onclick="GetdatainTable(alldRes,'-')">Previous</button>
+    <button class="btn btn-secondary " onclick="GetdatainTable(alldRes,'+')">Next</button>
+    </div>
+    </div>
+    
+  
+
+<footer class="footer fixed-bottom">
+<p class="text-center container">
+<a href=""><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+<a href=""><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+<a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></p>
+<div class="text-center cpy-right">
+			<span id="copy">© youngscientist|Designed by Maxwizard</span>
+		</div>
+</footer>
+</body>
+ <script type="text/javascript" src="covid.js"></script>
+<script>
+	var alldRes=data
+	console.log(alldRes)
+   
+	var start=0;
+	var end=0
+    function GetdatainTable(data,operator) {
+    	 end=eval(end+operator+10)?eval(end+operator+10):10
+    	 start=(end-10)>-1?end-10:0
+    	  end=end<243?end:243
+    	 start=end<241?start:240
+
+    	document.getElementById('table').innerHTML='';
+
+    for (var i=start;i<end;i++){
+    	responseObj=data.response[i]
+    	//k=Object.value(responseObj)
+    	//console.log(k)
+    	var colmn=[];
+         colmn[0]=i+1;
+	     colmn[1]=responseObj.continent;
+         colmn[2]=responseObj.country;
+         colmn[3]=responseObj.population;
+         colmn[4]=responseObj.cases.new;
+         colmn[5]=responseObj.cases.active;
+         colmn[6]=responseObj.cases.critical;
+         colmn[7]=responseObj.cases.recovered;
+         colmn[8]=responseObj.cases.total;
+         colmn[9]=responseObj.day;
+         colmn[10]=responseObj.deaths.new;
+         colmn[11]=responseObj.deaths.total;
+         colmn[12]=responseObj.tests.total;
+		var tr=document.createElement("tr");
+        for(var u=0;u<13;u++){
+		var colmnData=colmn[u];
+		var td=document.createElement("td");
+		var dataInTable=document.createTextNode(colmnData);
+		td.appendChild(dataInTable);
+		tr.appendChild(td);
+		document.getElementById('table').appendChild(tr);
+		}
+	}
+	
+}
+
+// i fetch the api for covid19 and that is the code below
+	fetch("https://covid-193.p.rapidapi.com/statistics", {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "covid-193.p.rapidapi.com",
+		"x-rapidapi-key": "5e4331f760mshe0ce5b3e2ed365fp1cf19cjsn3ca0dcdb9d67"
+	}
+})
+    //convert to json
+            .then(function (response) {
+                return response.json();
+            })
+            //here i call the function to handle the data
+            .then(function (data) {
+                console.log(data);
+
+                appendData(data)
+            }) // if any error happen so console log help here
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+            //function to handle the data for me
+        function appendData(data) {
+        alldRes=data
+        var div = document.getElementById("results");
+        div.innerHTML +="<br>Result: "+data.results;
+        // i need many array sice the data is  array of object
+}
+   
+   //here is the function that get the data from the api as the api itself is has many objects properties
+window.onload=GetdatainTable(alldRes,'+')
+ 
+	</script>
+</html>
+
+
