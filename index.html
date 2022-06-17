@@ -10,7 +10,7 @@
   <meta charset="utf-8">
 
 <style type="text/css">
-     
+     body{background: black}
 	.header{background: #22002a;
 		color: #fff;
 		padding: 10px;}
@@ -142,7 +142,6 @@
             //here i call the function to handle the data
             .then(function (data) {
                 console.log(data);
-
                 appendData(data)
             }) // if any error happen so console log help here
             .catch(function (err) {
@@ -154,26 +153,14 @@
         allDataGotten=data
         var div = document.getElementById("results");
         div.innerHTML +="<br>Result: "+data.results;
+        GetdatainTable(alldRes,'+')
         // i need many array sice the data is  array of object
 }
    
-   //here is the function that get the data from the api as the api itself is has many objects properties
-window.onload=GetdatainTable(alldRes,'+')
+   
  
 	</script>
 </html>
-<!--fetch("https://covid-193.p.rapidapi.com/countries", {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-host": "covid-193.p.rapidapi.com",
-		"x-rapidapi-key": "5e4331f760mshe0ce5b3e2ed365fp1cf19cjsn3ca0dcdb9d67"
-	}
-})
-.then(response => {
-	console.log(response);
-})
-.catch(err => {
-	console.log(err);
-});
+
 
 
