@@ -19,23 +19,24 @@
 	.table-responsive{height:all;
 		background:#444444;
 	    padding:3px;
-	    margin-bottom: 20%}
+	    margin-bottom: 25%}
 	
-	table{background: #152009;}
+
 	  footer{background: #222222;
            margin-bottom:0px
            padding: 5px;
-           height:15%;
+           height:auto;
            }
     
-    .fa{font-size: 44px;
+    .fa{font-size: 30px;
     	padding: 9px;
         margin: 9px}
    
     .page{background: #333;
-    	width: auto;
+    	width: 100%;
         margin:0px;
         height:auto;
+
         }
      .page button{margin:5px;}
       .cpy-right{color: white;
@@ -93,10 +94,10 @@
 		</div>
 </footer>
 </body>
- <script type="text/javascript" src="covid.js"></script>
+
 <script>
-	var alldRes=data
-	console.log(alldRes)
+
+	var alldRes;
    
 	var start=0;
 	var end=0
@@ -107,7 +108,6 @@
     	 start=end<241?start:240
 
     	document.getElementById('table').innerHTML='';
-
     for (var i=start;i<end;i++){
     	responseObj=data.response[i]
     	//k=Object.value(responseObj)
@@ -139,6 +139,7 @@
 	
 }
 
+	// body...
 // i fetch the api for covid19 and that is the code below
 	fetch("https://covid-193.p.rapidapi.com/statistics", {
 	"method": "GET",
@@ -163,14 +164,14 @@
             //function to handle the data for me
         function appendData(data) {
         alldRes=data
+       
         var div = document.getElementById("results");
         div.innerHTML +="<br>Result: "+data.results;
+        GetdatainTable(alldRes,'+')
         // i need many array sice the data is  array of object
 }
    
    //here is the function that get the data from the api as the api itself is has many objects properties
-window.onload=GetdatainTable(alldRes,'+')
- 
 	</script>
 </html>
 
