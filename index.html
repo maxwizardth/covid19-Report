@@ -92,9 +92,11 @@
     function GetdatainTable(data,operator) {
     	 end=eval(end+operator+10)?eval(end+operator+10):10
     	 start=(end-10)>-1?end-10:0
-    	  end=end<243?end:243
-    	 start=end<241?start:240
-
+    	  end=end<242?end:242
+    	 start=end<242?start:240
+    	 end=end==232?240:end
+    	 start=start==222?230:start
+    	 
     	document.getElementById('table').innerHTML='';
 
     for (var i=start;i<end;i++){
